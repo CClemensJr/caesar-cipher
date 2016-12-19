@@ -1,4 +1,13 @@
+def shift_alphabet
+  alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+              'o', 'p', 'q', 'u', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
+  shifted_alphabet = alphabet.clone
+  (0..@shift_factor - 1).each { shifted_alphabet.push(shifted_alphabet.shift) }
+end
+
+#******************
+#******************
 
 def user_input
   puts "\n\nWelcome to the Encryptonomicron."
@@ -28,6 +37,8 @@ end
 
 def use_the_cipher
   user_input
+
+  shift_alphabet
 end
 
 use_the_cipher
