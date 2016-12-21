@@ -1,27 +1,20 @@
 def encrypt_message
   @encrypted_message = @message.clone
 
-  @message.each_index do |i|
-    @alphabet.each_index do |j|
+  @encrypted_message.each_index do |letter|
+    if @encrypted_message[letter].ord.between?(65,90) || @encrypted_message[letter].ord.between?(97, 122)
+      @encrypted_message[letter] = @encrypted_message[letter].ord + @shift_factor
 
-      if @message[i] == @alphabet[j]
-        @encrypted_message[i] = @shifted_alphabet[j]
+      if @encrypted_message[letter].between?(91,96) || @encrypted_message[letter] > 122
+        @encrypted_message[letter] -= 26
       end
+
+      @encrypted_message[letter] = @encrypted_message[letter].chr
+
     end
   end
 
-  puts "Encrypted Message: #{@encrypted_message.join(" ")}"
-end
-
-#******************
-#******************
-
-def shift_alphabet
-  @alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-               'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-
-  @shifted_alphabet = @alphabet.clone
-  (0..@shift_factor-1 ).each { @shifted_alphabet.push(@shifted_alphabet.shift) }
+  puts "Encrypted Message: #{@encrypted_message.join("")}"
 end
 
 #******************
@@ -30,7 +23,7 @@ end
 def user_input
   puts "\n\nWelcome to the Encryptonomicron."
   print "\n\nMessage: "
-  @message = $stdin.gets.chomp.downcase!.strip.split("")
+  @message = $stdin.gets.chomp.strip.split("")
 
   print "\n\nShift factor: "
   @shift_factor = $stdin.gets.chomp.to_i
@@ -55,8 +48,6 @@ end
 
 def use_the_cipher
   user_input
-
-  shift_alphabet
 
   encrypt_message
 end
